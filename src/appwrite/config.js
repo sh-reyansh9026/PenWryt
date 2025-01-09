@@ -1,14 +1,14 @@
 import conf from '../conf/conf.js';
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 
-export class Service {
+export class Service{
     client = new Client();
     databases;
     bucket;
 
     constructor() {
         this.client
-        .setEndpoint('https://cloud.appwrite.io/v1')
+            .setEndpoint('https://cloud.appwrite.io/v1')
         .setProject("66cadf8a0034786169b8");
 
         this.databases = new Databases(this.client);
@@ -18,8 +18,8 @@ export class Service {
     async createPost({ title, slug, content, featuredImage, status, userId }) {
         try {
             return await this.databases.createDocument(
-                "66cae108003b491c8aef",
-                "66cae147003682b745e5",
+                "66cae108003b491c8aef", // database id
+                "66cae147003682b745e5", // conf.appwriteCollectionId,
                 slug,
                 {
                     title,
@@ -37,8 +37,8 @@ export class Service {
     async updatePost(slug, { title, content, featuredImage, status }) {
         try {
             return await this.databases.updateDocument(
-                "66cae108003b491c8aef",
-                "66cae147003682b745e5",
+                "66cae108003b491c8aef", // database id
+                "66cae147003682b745e5", // conf.appwriteCollectionId,
                 slug,
                 {
                     title,
@@ -55,8 +55,8 @@ export class Service {
     async deletePost(slug) {
         try {
             await this.databases.deleteDocument(
-                "66cae108003b491c8aef",
-                "66cae147003682b745e5",
+                "66cae108003b491c8aef", // database id
+                "66cae147003682b745e5", // conf.appwriteCollectionId,
                 slug
             );
 
@@ -70,8 +70,8 @@ export class Service {
     async getPost(slug) {
         try {
             return await this.databases.getDocument(
-                "66cae108003b491c8aef",
-                "66cae147003682b745e5",
+                "66cae108003b491c8aef", // database id
+                "66cae147003682b745e5", // conf.appwriteCollectionId,
                 slug,
             );
         } catch (error) {
@@ -83,8 +83,8 @@ export class Service {
     async getPosts(queries = [Query.equal("status", "active")]) {
         try {
             return await this.databases.listDocuments(
-                "66cae108003b491c8aef",
-                "66cae147003682b745e5",
+                "66cae108003b491c8aef", // database id
+                "66cae147003682b745e5", // conf.appwriteCollectionId,
                 queries,
             )
         } catch (error) {
@@ -97,7 +97,7 @@ export class Service {
     async uploadFile(file) {
         try {
             return await this.bucket.createFile(
-                "66cae3520015fb286698",
+                "677fd76b00098614304a", //conf.appwriteBucketId,
                 ID.unique(),
                 file
             )
@@ -110,7 +110,7 @@ export class Service {
     async deleteFile(fileId) {
         try {
             await this.bucket.deleteFile(
-                "66cae3520015fb286698",
+                "677fd76b00098614304a", //conf.appwriteBucketId,
                 fileId
             )
             return true;
@@ -122,7 +122,7 @@ export class Service {
 
     getFilePreview(fileId) {
         return this.bucket.getFilePreview(
-            "66cae3520015fb286698",
+            "677fd76b00098614304a", //conf.appwriteBucketId,
             fileId
         )
     }
