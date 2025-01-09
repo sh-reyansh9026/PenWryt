@@ -77,8 +77,9 @@ function PostForm({ post }) {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap w-full">
+      {/* Main content section */}
+      <div className="w-full lg:w-2/3 px-2">
         <Input
           label="Title :"
           placeholder="Title"
@@ -103,7 +104,9 @@ function PostForm({ post }) {
           defaultValue={getValues("content")}
         />
       </div>
-      <div className="w-1/3 px-2">
+
+      {/* Sidebar section */}
+      <div className="w-full lg:w-1/3 px-2 mt-6 lg:mt-0">
         <Input
           label="Featured Image :"
           type="file"
@@ -116,7 +119,7 @@ function PostForm({ post }) {
             <img
               src={appwriteService.getFilePreview(post.featuredImage)}
               alt={post.title}
-              className="rounded-lg"
+              className="rounded-lg w-full object-cover"
             />
           </div>
         )}
